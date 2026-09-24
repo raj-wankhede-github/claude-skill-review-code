@@ -31,16 +31,17 @@ It works with any language, framework or project type, with or without git, and 
 
 ## Install
 
-This is a plain Claude Code skill, not a plugin. Copy the skill folder, evals included, into
-your user skills directory (available in every repository):
+This is a plain Claude Code skill, not a plugin. Clone the repository and copy the skill folder,
+evals included, into your user skills directory (available in every repository):
 
 ```sh
-cp -r second-pair-of-eyes ~/.claude/skills/
+git clone https://github.com/raj-wankhede-github/claude-skill-review-code.git
+cp -r claude-skill-review-code/second-pair-of-eyes ~/.claude/skills/
 ```
 
-Or copy it into one repository's `.claude/skills/` to share it with that project's team. After
-editing the skill here, run the same command again to update the installed copy. The evals are
-never loaded during a review.
+Or copy it into one repository's `.claude/skills/` to share it with that project's team. To
+update, `git pull` in the clone and run the `cp` command again. The evals are never loaded
+during a review.
 
 ## Usage
 
