@@ -154,3 +154,7 @@ These are pre-approved:
 
 If the reviewer wants to run your tests, linter or type checker, Claude Code asks you first. The
 skill never deploys, migrates, installs, commits, pushes, or writes to tickets or PRs.
+
+## License
+
+[MIT](LICENSE) © 2026 Raj Wankhede
