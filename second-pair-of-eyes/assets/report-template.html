@@ -1,0 +1,234 @@
+<!-- LOCAL-ONLY:START — keep when saving as a local .html file; DELETE this block when publishing as an Artifact -->
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- LOCAL-ONLY:END -->
+<title>{{TITLE — two to four words, e.g. "Refund Worker Review"}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  :root {
+    --ground: #f5f6f8; --surface: #ffffff; --ink: #161b26; --muted: #586174; --rule: #dde1e8;
+    --accent: #1f6f8b; --accent-soft: #e3f0f4; --code-bg: #eef1f5;
+    --crit: #b42318;  --crit-soft: #fbe7e5;
+    --high: #c4520a;  --high-soft: #fdeddf;
+    --med: #9a6200;   --med-soft: #fbf0dc;
+    --low: #1f6f8b;   --low-soft: #e3f0f4;
+    --info: #5f6675;  --info-soft: #eceef2;
+    --ok: #2e7d4f;    --ok-soft: #e4f3ea;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #0f1319; --surface: #161b23; --ink: #e6e9ef; --muted: #97a0b0; --rule: #2a313c;
+      --accent: #63b6d3; --accent-soft: #15303a; --code-bg: #1d242e;
+      --crit: #f97066; --crit-soft: #3a1a18; --high: #f5a15a; --high-soft: #3a2413;
+      --med: #e3b35c; --med-soft: #33280f; --low: #63b6d3; --low-soft: #15303a;
+      --info: #a3aab8; --info-soft: #242a33; --ok: #6fcf97; --ok-soft: #173024;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #0f1319; --surface: #161b23; --ink: #e6e9ef; --muted: #97a0b0; --rule: #2a313c;
+    --accent: #63b6d3; --accent-soft: #15303a; --code-bg: #1d242e;
+    --crit: #f97066; --crit-soft: #3a1a18; --high: #f5a15a; --high-soft: #3a2413;
+    --med: #e3b35c; --med-soft: #33280f; --low: #63b6d3; --low-soft: #15303a;
+    --info: #a3aab8; --info-soft: #242a33; --ok: #6fcf97; --ok-soft: #173024;
+  }
+
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  .page { display: grid; grid-template-columns: 1fr; gap: 32px; max-width: 1120px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 64px; }
+  @media (min-width: 1000px) {
+    .page { grid-template-columns: 220px minmax(0, 1fr); padding-inline: 32px; }
+    .toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; }
+  }
+
+  .masthead { grid-column: 1 / -1; display: grid; gap: 12px; border-bottom: 1px solid var(--rule); padding-bottom: 24px; }
+  .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.15; font-weight: 600; margin: 0; text-wrap: balance; }
+  .meta { display: grid; gap: 6px; margin: 0; color: var(--muted); max-width: 80ch; }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  /* Severity counts — also act as filters */
+  .counts { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+  .counts button { font: 500 12px/1 var(--mono); letter-spacing: .04em; text-transform: uppercase; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+  .counts button b { font-size: 16px; }
+  .counts button[aria-pressed="true"] { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .counts button:focus-visible { outline: 2px solid var(--accent); }
+
+  .toc { font-size: 13px; }
+  .toc h2 { font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  @media (min-width: 1000px) { .toc ol { flex-direction: column; gap: 2px; } }
+  .toc a { color: var(--muted); text-decoration: none; display: block; padding: 3px 0; border-left: 2px solid transparent; }
+  @media (min-width: 1000px) { .toc a { padding-left: 10px; } }
+  .toc a:hover, .toc a[aria-current="true"] { color: var(--ink); border-left-color: var(--accent); }
+  .toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  main { min-width: 0; display: grid; gap: 40px; }
+  section { display: grid; gap: 14px; scroll-margin-top: 24px; }
+  section > h2 { font-size: 21px; font-weight: 600; line-height: 1.25; margin: 0; padding-top: 8px; border-top: 1px solid var(--rule); text-wrap: balance; }
+  h3 { font-size: 15px; font-weight: 600; margin: 0; }
+  p, ul, ol { margin: 0; max-width: 72ch; }
+  ul, ol { padding-left: 1.3em; display: grid; gap: 4px; }
+  a { color: var(--accent); }
+  code { font: 13px/1.5 var(--mono); background: var(--code-bg); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+
+  .ref { font: 12.5px/1.5 var(--mono); background: var(--code-bg); color: var(--ink); border: 0; border-radius: 3px; padding: 1px 6px; cursor: copy; overflow-wrap: anywhere; text-align: left; }
+  .ref:hover { outline: 1px solid var(--accent); }
+  .ref:focus-visible { outline: 2px solid var(--accent); }
+  .ref.copied { outline: 1px solid var(--ok); }
+
+  .tag { display: inline-block; font: 500 11px/1 var(--mono); letter-spacing: .04em; text-transform: uppercase; padding: 4px 6px; border-radius: 3px; vertical-align: 2px; white-space: nowrap; }
+  .tag.critical { color: var(--crit); background: var(--crit-soft); }
+  .tag.high     { color: var(--high); background: var(--high-soft); }
+  .tag.medium   { color: var(--med);  background: var(--med-soft); }
+  .tag.low      { color: var(--low);  background: var(--low-soft); }
+  .tag.info     { color: var(--info); background: var(--info-soft); }
+  .tag.kind     { color: var(--muted); background: transparent; border: 1px solid var(--rule); }
+  .tag.ok       { color: var(--ok);   background: var(--ok-soft); }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 600; font-size: 12px; color: var(--muted); background: var(--ground); }
+  tr:last-child td { border-bottom: 0; }
+
+  .finding { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--info); border-radius: 6px; padding: 14px 16px; }
+  .finding[data-sev="critical"] { border-left-color: var(--crit); }
+  .finding[data-sev="high"]     { border-left-color: var(--high); }
+  .finding[data-sev="medium"]   { border-left-color: var(--med); }
+  .finding[data-sev="low"]      { border-left-color: var(--low); }
+  .finding[hidden] { display: none; }
+  .finding header { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+  .finding dl { display: grid; grid-template-columns: 1fr; gap: 6px 16px; margin: 0; }
+  @media (min-width: 700px) { .finding dl { grid-template-columns: 150px minmax(0, 1fr); } }
+  .finding dt { font: 500 11px/1.9 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+  .finding dd { margin: 0; min-width: 0; }
+  .empty { color: var(--muted); }
+
+  .footnote { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 16px; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<!--
+  COMPONENT PATTERNS — copy these into sections; delete this comment in the final file.
+
+  Code reference:   <button class="ref" type="button">src/api/orders.ts:40</button>
+  Severity tag:     <span class="tag critical">Critical</span> / high / medium / low / info
+  Type tag:         <span class="tag kind">Confirmed defect</span>
+  Status tag:       <span class="tag ok">Implemented</span> / <span class="tag medium">Partially</span> / <span class="tag high">Missing</span> / <span class="tag info">Can't verify</span>
+  Finding card (data-sev = critical|high|medium|low|info, lowercase):
+    <article class="finding" data-sev="high">
+      <header><span class="tag high">High</span><h3>Duplicate webhook delivery credits the account twice</h3><span class="tag kind">Confirmed defect</span></header>
+      <dl>
+        <dt>Location</dt><dd><button class="ref" type="button">app/webhooks.py:31</button></dd>
+        <dt>Problem</dt><dd>…</dd>
+        <dt>Why it matters</dt><dd>…</dd>
+        <dt>How it can happen</dt><dd>…</dd>
+        <dt>Suggested direction</dt><dd>…</dd>
+      </dl>
+    </article>
+  Table:            <div class="table-wrap"><table>…</table></div>
+-->
+
+<div class="page">
+  <header class="masthead">
+    <div class="eyebrow">Second pair of eyes · {{REPO NAME}}</div>
+    <h1>{{HEADLINE — what was reviewed, in plain words, e.g. "Refund worker: idempotent retries"}}</h1>
+    <div class="meta">
+      <div><b>Reviewed:</b> {{target}}</div>
+      <div><b>Mode:</b> {{mode}} · <b>Reviewer:</b> {{independent (fresh context) | inline (same context)}}</div>
+      <div><b>Generated:</b> {{YYYY-MM-DD}} at commit <code>{{short SHA or "no git"}}</code></div>
+    </div>
+    <ul class="counts" aria-label="Findings by severity — click to filter">
+      <li><button type="button" data-filter="all" aria-pressed="true">All <b>{{n}}</b></button></li>
+      <li><button type="button" data-filter="critical"><span class="tag critical">Critical</span> <b>{{n}}</b></button></li>
+      <li><button type="button" data-filter="high"><span class="tag high">High</span> <b>{{n}}</b></button></li>
+      <li><button type="button" data-filter="medium"><span class="tag medium">Medium</span> <b>{{n}}</b></button></li>
+      <li><button type="button" data-filter="low"><span class="tag low">Low</span> <b>{{n}}</b></button></li>
+      <li><button type="button" data-filter="info"><span class="tag info">Info</span> <b>{{n}}</b></button></li>
+    </ul>
+  </header>
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol id="toc-list"></ol>
+  </nav>
+
+  <main>
+    <!-- One <section id="…"> per report section, in the order of output-format.md. -->
+    <section id="summary">
+      <h2>Summary</h2>
+      <p>{{summary}}</p>
+    </section>
+
+    <section id="findings">
+      <h2>Findings</h2>
+      <!-- finding cards, most severe first; if none: <p class="empty">No findings.</p> -->
+    </section>
+
+    <!-- … intent, diff hygiene, checked, test gaps, questions, solid … -->
+
+    <p class="footnote">Generated by /second-pair-of-eyes from a read-only review of the repository. Findings are ranked by severity; items under Questions / Assumptions could not be verified from the repository.</p>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var list = document.getElementById("toc-list");
+    var sections = Array.prototype.slice.call(document.querySelectorAll("main > section[id]"));
+    var links = sections.map(function (s) {
+      var h = s.querySelector("h2");
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + s.id;
+      a.textContent = h ? h.textContent : s.id;
+      li.appendChild(a);
+      list.appendChild(li);
+      return a;
+    });
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (a) {
+            a.setAttribute("aria-current", a.getAttribute("href") === "#" + e.target.id ? "true" : "false");
+          });
+        });
+      }, { rootMargin: "0px 0px -70% 0px" });
+      sections.forEach(function (s) { io.observe(s); });
+    }
+
+    // Severity filter
+    var buttons = Array.prototype.slice.call(document.querySelectorAll(".counts button[data-filter]"));
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var f = b.getAttribute("data-filter");
+        buttons.forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+        document.querySelectorAll(".finding").forEach(function (card) {
+          card.hidden = f !== "all" && card.getAttribute("data-sev") !== f;
+        });
+      });
+    });
+
+    // Copy code references on click; fall back to selecting the text.
+    document.addEventListener("click", function (ev) {
+      var btn = ev.target.closest && ev.target.closest(".ref");
+      if (!btn) return;
+      var text = btn.textContent.trim();
+      function mark() {
+        btn.classList.add("copied");
+        setTimeout(function () { btn.classList.remove("copied"); }, 1200);
+      }
+      function selectIt() {
+        var r = document.createRange(); r.selectNodeContents(btn);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }
+      try { navigator.clipboard.writeText(text).then(mark, selectIt); } catch (e) { selectIt(); }
+    });
+  })();
+</script>
